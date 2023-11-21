@@ -71,10 +71,21 @@ class test_fileStorage(unittest.TestCase):
 
     def test_reload_empty(self):
         """ Load from an empty file """
+        # Create an empty file
         with open('file.json', 'w') as f:
             pass
-        with self.assertRaises(ValueError):
+
+        # Use a context manager to catch the exception and check its message
+        with self.assertRaises(ValueError) as context:
             storage.reload()
+
+        # Check the exception message
+        expected_message = "Custom error message for handling an empty file"
+        self.assertEqual(str(context.exception), expected_message)
+
+        # Optional: Clean up the file after the test
+        if os.path.exists('file.json'):
+            os.remove('file.json')
 
     def test_reload_from_nonexistent(self):
         """ Nothing happens if file does not exist """
@@ -107,3 +118,7 @@ class test_fileStorage(unittest.TestCase):
         from models.engine.file_storage import FileStorage
         print(type(storage))
         self.assertEqual(type(storage), FileStorage)
+
+
+if __name__ == '__main__':
+    unittest.main()
