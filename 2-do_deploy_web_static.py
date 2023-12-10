@@ -9,11 +9,12 @@ from os.path import exists
 
 env.hosts = ['100.25.167.92', '18.234.168.83']
 env.user = 'ubuntu'
-env.key_filename = '~/.ssh/id_rsa'
+env.key_filename = 'usr/bin/ssh'
 
 
 def do_pack():
     """Create a compressed archive of web_static folder"""
+    with Connection(env.hosts[0], user=env.user, connect_kwargs={"key_filename": env.key_filename}):
     local("mkdir -p versions")
     time_format = "%Y%m%d%H%M%S"
     archive_name = "web_static_{}.tgz".format(datetime.utcnow().strftime(time_format))
