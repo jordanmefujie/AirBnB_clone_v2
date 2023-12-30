@@ -8,6 +8,10 @@ Routes:
 from models import storage
 from flask import Flask
 from flask import render_template
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
 
 app = Flask(__name__)
 
